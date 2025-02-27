@@ -2,14 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Novo Usuário</title>
+    <title>Editar Usuário</title>
 </head>
 <body>
     <div th:insert="/panel"></div>
 
-    <h1>Novo Usuário</h1>
+    <h1>Editar Usuário</h1>
     <form
-        th:action="@{/panel/user/new}"
+        th:action="@{/panel/user/edit/{id}(id=${user.id})}"
         method="post"
         th:object="${user}"
         autocomplete="off">
