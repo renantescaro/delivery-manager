@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .anyRequest().authenticated() // Todas as outras rotas também exigem login
             )
             .formLogin(form -> form
-                .defaultSuccessUrl("/panel", true) // Redireciona para /hello após login
+                .defaultSuccessUrl("/panel", true) // Redireciona para /panel após login
                 .permitAll()
             )
             .logout(logout -> logout

@@ -3,11 +3,11 @@ package com.codes_tech.delivery_manager.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -49,6 +49,9 @@ public class UserController {
 
     @RequestMapping(path = "/new", method = RequestMethod.POST)
     public String insert(@ModelAttribute User user) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        user.setPassword(encoder.encode(user.getPassword()));
+
         userRepository.save(user);
         return "redirect:/panel/user";
     }
@@ -56,13 +59,24 @@ public class UserController {
     @RequestMapping(path = "/edit/{id}", method = RequestMethod.POST)
     public String update(@PathVariable Long id, @ModelAttribute User user) {
         Optional<User> existingUser = userRepository.findById(id);
+        
         if (existingUser.isPresent()) {
             User updatedUser = existingUser.get();
+            if (user.getPassword() != updatedUser.getPassword()) {
+                BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+                updatedUser.setPassword(encoder.encode(user.getPassword()));
+            }
+
             updatedUser.setUsername(user.getUsername());
             updatedUser.setEmail(user.getEmail());
-            updatedUser.setPassword(user.getPassword());
             userRepository.save(updatedUser);
         }
+        return "redirect:/panel/user";
+    }
+
+    @RequestMapping(path = "/delete/{id}", method = RequestMethod.POST)
+    public String delete(@PathVariable Long id) {
+        userRepository.deleteById(id);
         return "redirect:/panel/user";
     }
 }
