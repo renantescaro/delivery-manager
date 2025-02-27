@@ -1,6 +1,5 @@
 package com.codes_tech.delivery_manager.config;
 
-import com.codes_tech.delivery_manager.model.User;
 import com.codes_tech.delivery_manager.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,7 +37,7 @@ public class SecurityConfig {
                 .anyRequest().authenticated() // Todas as outras rotas também exigem login
             )
             .formLogin(form -> form
-                .defaultSuccessUrl("/hello", true) // Redireciona para /hello após login
+                .defaultSuccessUrl("/panel", true) // Redireciona para /hello após login
                 .permitAll()
             )
             .logout(logout -> logout

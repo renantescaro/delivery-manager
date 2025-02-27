@@ -5,10 +5,17 @@
     <title>Lista de Usuários</title>
 </head>
 <body>
-    <h1>Bem-vindo ao Spring Boot com Thymeleaf!</h1>
+    <div th:insert="/panel"></div>
+    <div>
+        <h2>Listagem de Usuários</h2>
+    </div>
 
-    <h2>Lista de Usuários:</h2>
-    <table border="1">
+    <br><br>
+
+    <a class="btn btn-primary" href="/user/new">Novo Usuario +</a>
+    <br>
+
+    <table class="table table-striped table-">
         <thead>
             <tr>
                 <th>ID</th>
@@ -25,7 +32,7 @@
         </tbody>
     </table>
 
-    <p th:if="${#lists.isEmpty(user)}">Nenhum usuário encontrado.</p>
+    <p th:if="${#lists.isEmpty(users)}">Nenhum usuário encontrado.</p>
 
 </body>
 </html>
