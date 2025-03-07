@@ -25,8 +25,8 @@ public class DeliveryManController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String listRender(Model model) {
-        List<DeliveryMan> deliveryMans = deliveryManRepository.findAll();
-        model.addAttribute("deliveryMans", deliveryMans);
+        List<DeliveryMan> deliveryMen = deliveryManRepository.findAll();
+        model.addAttribute("deliveryMen", deliveryMen);
         return "deliveryMan/index";
     }
 
@@ -43,13 +43,13 @@ public class DeliveryManController {
             model.addAttribute("deliveryMan", deliveryMan.get());
             return "deliveryMan/edit";
         }
-        return "redirect:/panel/deliveryMan";
+        return "redirect:/panel/delivery-man";
     }
 
     @RequestMapping(path = "/new", method = RequestMethod.POST)
     public String insert(@ModelAttribute DeliveryMan deliveryMan) {
         deliveryManRepository.save(deliveryMan);
-        return "redirect:/panel/deliveryMan";
+        return "redirect:/panel/delivery-man";
     }
 
     @RequestMapping(path = "/edit/{id}", method = RequestMethod.POST)
@@ -62,14 +62,18 @@ public class DeliveryManController {
             updatedDeliveryMan.setName(deliveryMan.getName());
             updatedDeliveryMan.setDocument(deliveryMan.getDocument());
             updatedDeliveryMan.setPhone(deliveryMan.getPhone());
+            updatedDeliveryMan.setAddress(deliveryMan.getAddress());
+            updatedDeliveryMan.setAddressCity(deliveryMan.getAddressCity());
+            updatedDeliveryMan.setBirthday(deliveryMan.getBirthday());
+
             deliveryManRepository.save(updatedDeliveryMan);
         }
-        return "redirect:/panel/deliveryMan";
+        return "redirect:/panel/delivery-man";
     }
 
     @RequestMapping(path = "/delete/{id}", method = RequestMethod.POST)
     public String delete(@PathVariable Long id) {
         deliveryManRepository.deleteById(id);
-        return "redirect:/panel/deliveryMan";
+        return "redirect:/panel/delivery-man";
     }
 }

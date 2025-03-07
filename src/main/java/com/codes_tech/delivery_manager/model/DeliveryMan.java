@@ -1,7 +1,11 @@
 package com.codes_tech.delivery_manager.model;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
@@ -20,6 +24,16 @@ public class DeliveryMan{
     @Column(nullable = false, unique = true, length = 11)
     private String phone;
 
+    @Column(nullable = false, length = 300)
+    private String address;
+
+    @Column(name = "address_city", nullable = false, length = 300)
+    private String addressCity;
+
+    @Column(nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birthday;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
@@ -28,10 +42,20 @@ public class DeliveryMan{
         this.createdAt = LocalDateTime.now();
     }
 
-    public DeliveryMan(String name, String document, String phone) {
+    public DeliveryMan(
+        String name,
+        String document,
+        String phone,
+        String address,
+        String addressCity,
+        LocalDate birthday
+    ) {
         this.name = name;
         this.document = document;
         this.phone = phone;
+        this.address = address;
+        this.addressCity = addressCity;
+        this.birthday = birthday;
         this.createdAt = LocalDateTime.now();
     }
 
@@ -66,6 +90,30 @@ public class DeliveryMan{
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAddressCity() {
+        return addressCity;
+    }
+
+    public void setAddressCity(String addressCity) {
+        this.addressCity = addressCity;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
     }
 
     public LocalDateTime getCreatedAt() {
