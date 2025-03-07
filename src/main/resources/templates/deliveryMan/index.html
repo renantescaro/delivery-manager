@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Entregadores</title>
+</head>
+<body>
+    <div th:insert="~{/panel}"></div>
+    <div>
+        <h2>Listagem de Entregadores</h2>
+    </div>
+
+    <br><br>
+
+    <a
+        class="btn btn-primary"
+        href="/panel/delivery-man/new"
+        >Novo Entregador +</a>
+    <br>
+
+    <table class="table table-striped table-">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Documento</th>
+                <th>Celular</th>
+                <th>Documento</th>
+                <th>Logradouro</th>
+                <th>Cidade</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="deliveryMan : ${deliveryMen}">
+                <td th:text="${deliveryMan.id}">ID</td>
+                <td th:text="${deliveryMan.name}">Nome</td>
+                <td th:text="${deliveryMan.document}">Documento</td>
+                <td th:text="${deliveryMan.phone}">Celular</td>
+                <td th:text="${deliveryMan.address}">Logradouro</td>
+                <td th:text="${deliveryMan.addressCity}">Cidade</td>
+                <td>
+                    <a class="btn btn-primary"
+                        th:href="@{/panel/delivery-man/edit/{id}(id=${deliveryMan.id})}">
+                        Editar
+                    </a>
+                    <form th:id="'delete-form-' + ${deliveryMan.id}"
+                          th:action="@{/panel/delivery-man/delete/{id}(id=${deliveryMan.id})}"
+                          method="post"
+                          style="display: inline;">
+                        <button type="button" class="btn btn-danger"
+                                th:onclick="'confirmDelete(' + ${deliveryMan.id} + ')'">
+                            Apagar
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p th:if="${#lists.isEmpty(deliveryMen)}">Nenhum entregador encontrado.</p>
+
+    <script>
+        function confirmDelete(deliveryManId) {
+            if (confirm("Tem certeza que deseja apagar este entregador?")) {
+                document.getElementById("delete-form-" + deliveryManId).submit();
+            }
+        }
+    </script>
+</body>
+</html>
